@@ -4,26 +4,25 @@
 import sys
 input = sys.stdin.readline
 
-N = int(input())
+n = int(input())
 
-dp = [[0] * 10 for _ in range(N + 1)] # dp 테이블
+# DP 테이블
+dp = [[0 for _ in range(10)] for j in range(101)]
 
-for i in range(1, 10): # 1의 자릿수의 경우의 수 초기화
+
+for i in range(1, 10):
     dp[1][i] = 1
 
-# 나머지 자릿수의 경우의 수 탐색
-for i in range(2, N + 1):
-    for j in range(10):
-        #가장 뒤에 오는 숫자 0이면, 그 앞엔 1만 가능
+for i in range(2, n+1):
+    for j in range(10): # 0-9 각 숫자의 개수
         if j == 0:
-            dp[i][j] = dp[i - 1][1]
-        
-        # 가장 뒤에 오는 숫자 1~8이면, 그 앞엔 +-1 가능
+            dp[i][j] = dp[i-1][j+1]
         elif j == 9:
-            dp[i][j] = dp[i - 1][8]
-
-        # 가장 뒤에 오는 숫자 9이면, 그 앞엔 8만 가능
+            dp[i][j] = dp[i-1][j-1]
         else:
-            dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j + 1]
+            dp[i][j] = dp[i-1][j-1] + dp[i-1][j+1]
+result = 0
+for i in range(10):
+    result += dp[n][i]
 
-print(sum(dp[N]) % 1000000000)
+print(result % 1000000000)
