@@ -3,7 +3,7 @@
 
 import sys
 input = sys.stdin.readline
-sys.setrecursionlimit(100000)
+sys.setrecursionlimit(100001)
 
 N = int(input())  # 노드의 개수
 
